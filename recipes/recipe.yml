@@ -2,7 +2,7 @@
 name: valhalla-os
 description: This is my personal OS image with COSMIC Desktop.
 
-base-image: ghcr.io/ublue-os/cosmic-main
+base-image: ghcr.io/ublue-os/cosmic
 image-version: latest
 
 modules:
