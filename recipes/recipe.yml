@@ -34,7 +34,6 @@ modules:
         - gstreamer1-plugins-ugly
         - ffmpegthumbnailer
         - totem-video-thumbnailer
-        - gdk-pixbuf2-raw-thumbnailer # Korrigierter Paketname
         - gnome-epub-thumbnailer
 
         # 3) KDE Texteditor
