@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: valhalla-os
 description: This is my personal OS image.
@@ -20,6 +19,7 @@ modules:
       packages:
         - micro
         - starship
+        - fastfetch                # Systeminfo-CLI-Tool hinzugefügt
 
         # 1) Virtual Machine Manager & Dependencies
         - virt-manager
@@ -39,9 +39,10 @@ modules:
         # 3) KDE Texteditor
         - kate
 
-        # 4) GNOME Extensions Tools
+        # 4) GNOME Extensions Tools & Tweaks
         - gnome-extensions-app
         - gnome-browser-connector
+        - gnome-tweaks            # GNOME Optimierungen hinzugefügt
 
         # 5) Container & Dev Tools
         - distrobox
@@ -55,8 +56,7 @@ modules:
       - notify: true
         scope: system
         install: 
-          - org.gnome.Loupe
-          - com.visualstudio.code # VS Code sauber über Flathub
+          - org.gnome.Loupe       
       - scope: user 
 
   - type: signing
