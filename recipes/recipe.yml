@@ -10,12 +10,11 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest # You can pin to a specific version of Fedora as well
 
 # module configuration, executed in order
-# you can include multiple instances of the same module
 modules:
   - type: files
     files:
       - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+        destination: / # copies files/system/* into your image's root folder /
 
   - type: dnf
     repos:
@@ -25,21 +24,45 @@ modules:
       packages:
         - micro
         - starship
-    remove:
-      packages:
-        # example: removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
-        - firefox
-        - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+
+        # 1) Virtual Machine Manager & Dependencies
+        - virt-manager
+        - qemu-kvm
+        - libvirt
+        - edk2-ovmf # UEFI Support für VMs
+
+        # 2) Multimedia Codecs & Nautilus Thumbnail Vorschau
+        - ffmpeg
+        - gstreamer1-plugin-libav
+        - gstreamer1-plugins-bad-freeworld
+        - gstreamer1-plugins-ugly
+        - ffmpegthumbnailer # Thumbnailer für Videos
+        - totem-video-thumbnailer
+        - raw-thumbnailer # Für RAW-Bilder
+        - gnome-epub-thumbnailer
+
+        # 3) KDE Texteditor
+        - kate
+
+        # 4) GNOME Extensions Tools
+        - gnome-extensions-app
+        - gnome-browser-connector # Erlaubt Installation von Extensions direkt über den Browser
+
+        # 5) Container & Dev Tools (Bluefin DX & Editoren)
+        - distrobox # Wichtigstes Tool für Container-basierte Workflows
+        - just # Command Runner (Standard in Bluefin)
+        - podman-compose # Docker-Compose Alternative für Podman
+        - podman-docker # Setzt den 'docker' Alias auf 'podman'
+        - devbox
+        - neovim
+        - code # Visual Studio Code
 
   - type: default-flatpaks
     configurations:
-      - notify: true # Send notification after install/uninstall is finished (true/false)
+      - notify: true
         scope: system
-        # If no repo information is specified, Flathub will be used by default
-        install: # system flatpaks we want all users to have and not remove
-          - org.mozilla.firefox
+        install: 
           - org.gnome.Loupe
-      - scope: user # Also add Flathub user repo, but no user packages
+      - scope: user 
 
-  - type: signing # this sets up the proper policy & signing files for signed images to work fully
+  - type: signing
