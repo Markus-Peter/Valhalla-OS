@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 name: valhalla-os
-description: This is my personal OS image.
+description: This is my personal OS image with COSMIC Desktop.
 
-base-image: ghcr.io/ublue-os/silverblue-main
+base-image: ghcr.io/ublue-os/cosmic-main
 image-version: latest
 
 modules:
@@ -19,7 +19,7 @@ modules:
       packages:
         - micro
         - starship
-        - fastfetch                # Systeminfo-CLI-Tool hinzugefügt
+        - fastfetch
 
         # 1) Virtual Machine Manager & Dependencies
         - virt-manager
@@ -27,24 +27,17 @@ modules:
         - libvirt
         - edk2-ovmf
 
-        # 2) Multimedia Codecs & Nautilus Thumbnail Vorschau
+        # 2) Multimedia Codecs & Thumbnail Vorschau
         - ffmpeg
         - gstreamer1-plugin-libav
         - gstreamer1-plugins-bad-freeworld
         - gstreamer1-plugins-ugly
         - ffmpegthumbnailer
-        - totem-video-thumbnailer
-        - gnome-epub-thumbnailer
 
-        # 3) KDE Texteditor
+        # 3) Texteditor
         - kate
 
-        # 4) GNOME Extensions Tools & Tweaks
-        - gnome-extensions-app
-        - gnome-browser-connector
-        - gnome-tweaks            # GNOME Optimierungen hinzugefügt
-
-        # 5) Container & Dev Tools
+        # 4) Container & Dev Tools
         - distrobox
         - just
         - podman-compose
@@ -56,7 +49,7 @@ modules:
       - notify: true
         scope: system
         install: 
-          - org.gnome.Loupe       
+          - org.gnome.Loupe
       - scope: user 
 
   - type: signing
