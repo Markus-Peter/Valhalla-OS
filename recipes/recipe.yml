@@ -2,7 +2,7 @@
 name: valhalla-os
 description: This is my personal OS image with COSMIC Desktop.
 
-base-image: ghcr.io/ublue-os/cosmic
+base-image: ghcr.io/ublue-os/base-main
 image-version: latest
 
 modules:
@@ -15,11 +15,13 @@ modules:
     repos:
       copr:
         - atim/starship
+        - ryanabx/cosmic
     install:
       packages:
         - micro
         - starship
         - fastfetch
+        - cosmic-desktop
 
         # 1) Virtual Machine Manager & Dependencies
         - virt-manager
@@ -44,12 +46,10 @@ modules:
         - podman-docker
         - neovim
 
-  - type: default-flatpaks
-    configurations:
-      - notify: true
-        scope: system
-        install: 
-          - org.gnome.Loupe
-      - scope: user 
+  # COSMIC Display Manager (Login-Bildschirm) aktivieren
+  - type: systemd
+    system:
+      enabled:
+        - cosmic-greeter.service
 
   - type: signing
