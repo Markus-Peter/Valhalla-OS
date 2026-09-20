@@ -38,7 +38,7 @@ modules:
         - gstreamer1-plugins-ugly
         - ffmpegthumbnailer # Thumbnailer für Videos
         - totem-video-thumbnailer
-        - raw-thumbnailer # Für RAW-Bilder
+        - gdk-pixbuf2-raw-thumbnailer # Korrigierter Name für RAW-Bilder
         - gnome-epub-thumbnailer
 
         # 3) KDE Texteditor
@@ -46,16 +46,15 @@ modules:
 
         # 4) GNOME Extensions Tools
         - gnome-extensions-app
-        - gnome-browser-connector # Erlaubt Installation von Extensions direkt über den Browser
+        - gnome-browser-connector
 
         # 5) Container & Dev Tools (Bluefin DX & Editoren)
-        - distrobox # Wichtigstes Tool für Container-basierte Workflows
-        - just # Command Runner (Standard in Bluefin)
-        - podman-compose # Docker-Compose Alternative für Podman
-        - podman-docker # Setzt den 'docker' Alias auf 'podman'
-        - devbox
+        - distrobox
+        - just
+        - podman-compose
+        - podman-docker
         - neovim
-        - code # Visual Studio Code
+        - code # Wichtig: Erfordert die vscode.repo Datei!
 
   - type: default-flatpaks
     configurations:
