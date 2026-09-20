@@ -1,20 +1,16 @@
 ---
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-# image will be published to ghcr.io/<user>/<name>
 name: valhalla-os
-# description will be included in the image's metadata
 description: This is my personal OS image.
 
-# the base image to build on top of (FROM) and the version tag to use
 base-image: ghcr.io/ublue-os/silverblue-main
-image-version: latest # You can pin to a specific version of Fedora as well
+image-version: latest
 
-# module configuration, executed in order
 modules:
   - type: files
     files:
       - source: system
-        destination: / # copies files/system/* into your image's root folder /
+        destination: /
 
   - type: dnf
     repos:
@@ -29,16 +25,16 @@ modules:
         - virt-manager
         - qemu-kvm
         - libvirt
-        - edk2-ovmf # UEFI Support für VMs
+        - edk2-ovmf
 
         # 2) Multimedia Codecs & Nautilus Thumbnail Vorschau
         - ffmpeg
         - gstreamer1-plugin-libav
         - gstreamer1-plugins-bad-freeworld
         - gstreamer1-plugins-ugly
-        - ffmpegthumbnailer # Thumbnailer für Videos
+        - ffmpegthumbnailer
         - totem-video-thumbnailer
-        - gdk-pixbuf2-raw-thumbnailer # Korrigierter Name für RAW-Bilder
+        - gdk-pixbuf2-raw-thumbnailer # Korrigierter Paketname
         - gnome-epub-thumbnailer
 
         # 3) KDE Texteditor
@@ -48,13 +44,12 @@ modules:
         - gnome-extensions-app
         - gnome-browser-connector
 
-        # 5) Container & Dev Tools (Bluefin DX & Editoren)
+        # 5) Container & Dev Tools
         - distrobox
         - just
         - podman-compose
         - podman-docker
         - neovim
-        - code # Wichtig: Erfordert die vscode.repo Datei!
 
   - type: default-flatpaks
     configurations:
@@ -62,6 +57,7 @@ modules:
         scope: system
         install: 
           - org.gnome.Loupe
+          - com.visualstudio.code # VS Code sauber über Flathub
       - scope: user 
 
   - type: signing
