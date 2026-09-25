@@ -4,27 +4,29 @@ name: valhallalinux
 description: Immutable Linux distro based on Bluefin-DX, featuring COSMIC and Tuxedo Tools.
 
 base-image: ghcr.io/ublue-os/bluefin-dx
-image-version: latest 
+image-version: latest
 
 modules:
   - type: files
     files:
       - source: system
-        destination: / # copies files/system/ into your image's root folder.
+        destination: /
 
   - type: dnf
     repos:
       copr:
         - darrencocco/tuxedo-control-center
+        # Falls cosmic-desktop nicht in den Standard-Fedora-Repos gefunden wird:
+        # - ryanabx/cosmic
     install:
       packages:
         # --- TUXEDO TOOLS ---
         - tuxedo-control-center
         - tuxedo-drivers
-        
+
         # --- COSMIC DESKTOP ---
         - cosmic-desktop
-        
+
         # --- TERMINAL & TOOLS ---
         - foot
         - micro
@@ -35,18 +37,16 @@ modules:
 
   - type: default-flatpaks
     configurations:
-      - notify: true # Send notification after install/uninstall is finished 
+      - notify: true
         scope: system
-        install: 
-        # we love app images
+        install:
           - it.mijorus.gearlever
-      - scope: user 
 
   - type: os-release
     properties:
       ID: valhallalinux
-      ID_Like: fedora
+      ID_LIKE: fedora
       NAME: Valhalla Linux
       PRETTY_NAME: Valhalla Linux (Bluefin-DX Based)
 
-  - type: signing # this sets up the proper policy & signing files for signed images to work fully
+  - type: signing
