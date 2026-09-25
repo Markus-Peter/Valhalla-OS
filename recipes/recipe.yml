@@ -3,9 +3,7 @@
 name: valhallalinux
 description: Immutable Linux distro based on Bluefin-DX, featuring COSMIC and Tuxedo Tools.
 
-# 1) Base-Image auf Bluefin-DX geändert
 base-image: ghcr.io/ublue-os/bluefin-dx
-# Bluefin nutzt "latest" (entspricht dem aktuellen stabilen Fedora-Release, z.B. 40/41)
 image-version: latest 
 
 modules:
@@ -16,8 +14,8 @@ modules:
 
   - type: dnf
     repos:
-      # 2) COPR für das Tuxedo Control Center und die Treiber
-      - copr: darrencocco/tuxedo-control-center
+      copr:
+        - darrencocco/tuxedo-control-center
     install:
       packages:
         # --- TUXEDO TOOLS ---
@@ -25,12 +23,9 @@ modules:
         - tuxedo-drivers
         
         # --- COSMIC DESKTOP ---
-        # Installiert die komplette neue COSMIC Desktop Umgebung inkl. Abhängigkeiten
         - cosmic-desktop
         
-        # --- TERMINAL APPS ---
-        # Hinweis: bluefin-dx bringt micro, fish und git bereits mit, 
-        # das erneute Auflisten hier schadet aber nicht.
+        # --- TERMINAL & TOOLS ---
         - foot
         - micro
         - fish
