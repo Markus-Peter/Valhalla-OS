@@ -1,13 +1,13 @@
----
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 
 name: valhallalinux
-description: immuatuble linux distro based on Universal Blue & bootc.
+description: Immutable Linux distro based on Bluefin-DX, featuring COSMIC and Tuxedo Tools.
 
-base-image: ghcr.io/blue-build/base-images/fedora-base
-image-version: 44 
+# 1) Base-Image auf Bluefin-DX geändert
+base-image: ghcr.io/ublue-os/bluefin-dx
+# Bluefin nutzt "latest" (entspricht dem aktuellen stabilen Fedora-Release, z.B. 40/41)
+image-version: latest 
 
-# you can include multiple instances of the same module
 modules:
   - type: files
     files:
@@ -16,22 +16,26 @@ modules:
 
   - type: dnf
     repos:
-      copr:
-        - ashbuk/Hyprland-Fedora
-        - avengemedia/danklinux
+      # 2) COPR für das Tuxedo Control Center und die Treiber
+      - copr: darrencocco/tuxedo-control-center
     install:
       packages:
-      # terminal apps
+        # --- TUXEDO TOOLS ---
+        - tuxedo-control-center
+        - tuxedo-drivers
+        
+        # --- COSMIC DESKTOP ---
+        # Installiert die komplette neue COSMIC Desktop Umgebung inkl. Abhängigkeiten
+        - cosmic-desktop
+        
+        # --- TERMINAL APPS ---
+        # Hinweis: bluefin-dx bringt micro, fish und git bereits mit, 
+        # das erneute Auflisten hier schadet aber nicht.
         - foot
         - micro
         - fish
         - fastfetch
         - git
-      # desktop exp
-        - wayland-utils
-        - hyprland
-        - dms
-        - dms-greeter
         - brightnessctl
 
   - type: default-flatpaks
@@ -48,6 +52,6 @@ modules:
       ID: valhallalinux
       ID_Like: fedora
       NAME: Valhalla Linux
-      PRETTY_NAME: Valhalla Linux (Fedora Based)
+      PRETTY_NAME: Valhalla Linux (Bluefin-DX Based)
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
