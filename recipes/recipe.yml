@@ -31,7 +31,6 @@ modules:
         - foot
         - micro
         - fish
-        - fastfetch
         - git
         - brightnessctl
 
